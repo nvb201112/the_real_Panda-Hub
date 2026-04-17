@@ -370,7 +370,7 @@ local logoCorner = Instance.new("UICorner", logoBtn)
 logoCorner.CornerRadius = UDim.new(1, 0)
 
 local logoStroke = Instance.new("UIStroke", logoBtn)
-logoStroke.Color = Color3.fromRGB(80, 170, 255)
+logoStroke.Color = Color3.fromRGB(120, 50, 200)
 logoStroke.Thickness = 2
 logoStroke.Transparency = 0.2
 
