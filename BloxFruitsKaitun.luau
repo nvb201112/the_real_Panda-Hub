@@ -336,120 +336,212 @@ local function formatTime(gameTime)
     return string.format("%02d:%02d:%02d", hours, minutes, seconds)
 end
 
--- Tạo ScreenGui
-L_1_[11] = Instance.new("ScreenGui")
-L_1_[11]["Name"] = "Status_UI"
-L_1_[11]["ResetOnSpawn"] = false
-L_1_[11]["Parent"] = L_1_[43]
+L_1_[5] = game:GetService("Players")["LocalPlayer"]
 
--- Frame chính
-L_1_[42] = Instance.new("Frame")
-L_1_[42]["BorderSizePixel"] = 0
-L_1_[42]["BackgroundColor3"] = Color3.fromRGB(0, 0, 0)
-L_1_[42]["AnchorPoint"] = Vector2.new(0.5, 0.5)
-L_1_[42]["Size"] = UDim2.new(0.80533, 0, 1.15663, 0)
-L_1_[42]["Position"] = UDim2.new(0.5, 0, 0.5, 0)
-L_1_[42]["BackgroundTransparency"] = 0.2
-L_1_[42]["Parent"] = L_1_[11]
+-- ====================  HUB UI (DÁN VÀO ĐÂY) ====================
+local Players = game:GetService("Players")
+local RunService = game:GetService("RunService")
+local Stats = game:GetService("Stats")
 
--- UIStroke
-L_1_[12] = Instance.new("UIStroke")
-L_1_[12]["Transparency"] = 0.2
-L_1_[12]["Thickness"] = 1000
-L_1_[12]["Parent"] = L_1_[42]
+local player = Players.LocalPlayer
 
--- UICorner
-L_1_[41] = Instance.new("UICorner")
-L_1_[41]["CornerRadius"] = UDim.new(0, 9)
-L_1_[41]["Parent"] = L_1_[42]
+-- Clear old UI
+if player.PlayerGui:FindFirstChild("MeowHubUI") then
+    player.PlayerGui.MeowHubUI:Destroy()
+end
 
--- ImageLabel (logo)
-local ImageLabel = Instance.new("ImageLabel")
-ImageLabel["BorderSizePixel"] = 0
-ImageLabel["BackgroundColor3"] = Color3.fromRGB(255, 255, 255)
-ImageLabel["AnchorPoint"] = Vector2.new(0.5, 0.5)
-ImageLabel["Image"] = "rbxassetid://122444592900332"
-ImageLabel["Size"] = UDim2.new(0.31788, 0, 0.46875, 0)
-ImageLabel["BackgroundTransparency"] = 1
-ImageLabel["Position"] = UDim2.new(0.5, 0, 0.21354, 0)
-ImageLabel["Parent"] = L_1_[42]
+local gui = Instance.new("ScreenGui")
+gui.Name = "MeowHubUI"
+gui.ResetOnSpawn = false
+gui.ZIndexBehavior = Enum.ZIndexBehavior.Sibling
+gui.Parent = player.PlayerGui
 
--- AspectRatioConstraint
-local AspectConstraint = Instance.new("UIAspectRatioConstraint")
-AspectConstraint["AspectRatio"] = 1.57292
-AspectConstraint["Parent"] = L_1_[42]
+-- Logo Toggle
+local logoBtn = Instance.new("ImageButton")
+logoBtn.Name = "ToggleLogo"
+logoBtn.Size = UDim2.new(0, 46, 0, 46)
+logoBtn.Position = UDim2.new(0, 14, 0, 14)
+logoBtn.BackgroundColor3 = Color3.fromRGB(22, 22, 28)
+logoBtn.Image = "rbxassetid://122444592900332"
+logoBtn.AutoButtonColor = false
+logoBtn.Parent = gui
 
--- Level Label
-local LevelLabel = Instance.new("TextLabel")
-LevelLabel["BorderSizePixel"] = 0
-LevelLabel["TextSize"] = 14
-LevelLabel["BackgroundColor3"] = Color3.fromRGB(255, 255, 255)
-LevelLabel["TextColor3"] = Color3.fromRGB(35, 255, 226)
-LevelLabel["BackgroundTransparency"] = 1
-LevelLabel["Size"] = UDim2.new(0.1457, 0, 0.07292, 0)
-LevelLabel["Text"] = "Level: " .. (L_1_[5].Data.Level.Value or 0)
-LevelLabel["Position"] = UDim2.new(0.05298, 0, 0.625, 0)
-LevelLabel["Parent"] = L_1_[42]
+local logoCorner = Instance.new("UICorner", logoBtn)
+logoCorner.CornerRadius = UDim.new(1, 0)
 
--- Beli Label
-local BeliLabel = Instance.new("TextLabel")
-BeliLabel["BorderSizePixel"] = 0
-BeliLabel["TextSize"] = 14
-BeliLabel["BackgroundColor3"] = Color3.fromRGB(255, 255, 255)
-BeliLabel["TextColor3"] = Color3.fromRGB(13, 255, 0)
-BeliLabel["BackgroundTransparency"] = 1
-BeliLabel["Size"] = UDim2.new(0.23179, 0, 0.07292, 0)
-BeliLabel["Text"] = "Beli: " .. (L_1_[5].Data.Beli.Value or 0)
-BeliLabel["Position"] = UDim2.new(0.22517, 0, 0.625, 0)
-BeliLabel["Parent"] = L_1_[42]
+local logoStroke = Instance.new("UIStroke", logoBtn)
+logoStroke.Color = Color3.fromRGB(80, 170, 255)
+logoStroke.Thickness = 2
+logoStroke.Transparency = 0.2
 
--- Fragments Label
-local FragmentsLabel = Instance.new("TextLabel")
-FragmentsLabel["BorderSizePixel"] = 0
-FragmentsLabel["TextSize"] = 14
-FragmentsLabel["BackgroundColor3"] = Color3.fromRGB(255, 255, 255)
-FragmentsLabel["TextColor3"] = Color3.fromRGB(143, 125, 255)
-FragmentsLabel["BackgroundTransparency"] = 1
-FragmentsLabel["Size"] = UDim2.new(0.25828, 0, 0.07292, 0)
-FragmentsLabel["Text"] = "Fragments: " .. (L_1_[5].Data.Fragments.Value or 0)
-FragmentsLabel["Position"] = UDim2.new(0.46026, 0, 0.625, 0)
-FragmentsLabel["Parent"] = L_1_[42]
+task.spawn(function()
+    while task.wait(0.03) do
+        logoStroke.Transparency = 0.2 + math.abs(math.sin(tick() * 1.5)) * 0.35
+    end
+end)
 
--- Devil Fruits Label
-local DevilFruitsLabel = Instance.new("TextLabel")
-DevilFruitsLabel["BorderSizePixel"] = 0
-DevilFruitsLabel["TextSize"] = 14
-DevilFruitsLabel["BackgroundColor3"] = Color3.fromRGB(255, 255, 255)
-DevilFruitsLabel["TextColor3"] = Color3.fromRGB(255, 81, 247)
-DevilFruitsLabel["BackgroundTransparency"] = 1
-DevilFruitsLabel["Size"] = UDim2.new(0.26159, 0, 0.07292, 0)
-DevilFruitsLabel["Text"] = "Devil Fruits: " .. (L_1_[5].Data.DevilFruit.Value or "None")
-DevilFruitsLabel["Position"] = UDim2.new(0.75497, 0, 0.625, 0)
-DevilFruitsLabel["Parent"] = L_1_[42]
+-- Main Frame
+local main = Instance.new("Frame")
+main.Size = UDim2.new(0, 430, 0, 290)
+main.Position = UDim2.new(0.5, -215, 0.5, -145)
+main.BackgroundColor3 = Color3.fromRGB(22, 22, 28)
+main.BorderSizePixel = 0
+main.Visible = true
+main.Parent = gui
 
--- Status Label (L_1_[26] để tương thích với script cũ)
-L_1_[26] = Instance.new("TextLabel")
-L_1_[26]["BorderSizePixel"] = 0
-L_1_[26]["TextSize"] = 19
-L_1_[26]["BackgroundColor3"] = Color3.fromRGB(255, 255, 255)
-L_1_[26]["TextColor3"] = Color3.fromRGB(255, 255, 255)
-L_1_[26]["BackgroundTransparency"] = 1
-L_1_[26]["Size"] = UDim2.new(0.19868, 0, 0.13021, 0)
-L_1_[26]["Text"] = "Status: Nil"
-L_1_[26]["Position"] = UDim2.new(0.40066, 0, 0.375, 0)
-L_1_[26]["Parent"] = L_1_[42]
+local corner = Instance.new("UICorner", main)
+corner.CornerRadius = UDim.new(0, 22)
 
--- Time Label
-local TimeLabel = Instance.new("TextLabel")
-TimeLabel["BorderSizePixel"] = 0
-TimeLabel["TextSize"] = 19
-TimeLabel["BackgroundColor3"] = Color3.fromRGB(255, 255, 255)
-TimeLabel["TextColor3"] = Color3.fromRGB(255, 0, 0)
-TimeLabel["BackgroundTransparency"] = 1
-TimeLabel["Size"] = UDim2.new(0.95695, 0, 0.125, 0)
-TimeLabel["Text"] = "Time: " .. formatTime(math.floor(workspace.DistributedGameTime + 0.5))
-TimeLabel["Position"] = UDim2.new(0.03642, 0, 0.47917, 0)
-TimeLabel["Parent"] = L_1_[42]
+local neon = Instance.new("UIStroke", main)
+neon.Color = Color3.fromRGB(80, 170, 255)
+neon.Thickness = 2
+neon.Transparency = 0.18
+
+task.spawn(function()
+    while task.wait(0.03) do
+        neon.Transparency = 0.18 + math.abs(math.sin(tick() * 1.4)) * 0.28
+    end
+end)
+
+-- Background
+local bg = Instance.new("ImageLabel")
+bg.Size = UDim2.new(1,0,1,0)
+bg.BackgroundTransparency = 1
+bg.Image = "rbxassetid://137898463182318"
+bg.ImageTransparency = 0.1
+bg.ScaleType = Enum.ScaleType.Crop
+bg.Parent = main
+Instance.new("UICorner", bg).CornerRadius = UDim.new(0,22)
+
+local overlay = Instance.new("Frame")
+overlay.Size = UDim2.new(1,0,1,0)
+overlay.BackgroundColor3 = Color3.fromRGB(30,30,38)
+overlay.BackgroundTransparency = 0.65
+overlay.Parent = main
+Instance.new("UICorner", overlay).CornerRadius = UDim.new(0,22)
+
+-- Avatar
+local avatar = Instance.new("ImageLabel")
+avatar.Size = UDim2.new(0,64,0,64)
+avatar.Position = UDim2.new(0,18,0,18)
+avatar.BackgroundTransparency = 1
+avatar.Image = Players:GetUserThumbnailAsync(player.UserId, Enum.ThumbnailType.HeadShot, Enum.ThumbnailSize.Size150x150)
+avatar.Parent = main
+Instance.new("UICorner", avatar).CornerRadius = UDim.new(1,0)
+
+-- Title & Subtitle
+local title = Instance.new("TextLabel")
+title.Text = "THE_REAL_PANDA HUB"
+title.Font = Enum.Font.GothamBold
+title.TextSize = 22
+title.TextColor3 = Color3.fromRGB(120,200,255)
+title.Position = UDim2.new(0,98,0,22)
+title.Size = UDim2.new(1,-110,0,26)
+title.BackgroundTransparency = 1
+title.TextXAlignment = Enum.TextXAlignment.Left
+title.Parent = main
+
+local sub = Instance.new("TextLabel")
+sub.Text = "Kaitun Script"
+sub.Font = Enum.Font.GothamBold
+sub.TextSize = 14
+sub.TextColor3 = Color3.fromRGB(150,215,255)
+sub.Position = UDim2.new(0,98,0,50)
+sub.Size = UDim2.new(1,-110,0,20)
+sub.BackgroundTransparency = 1
+sub.TextXAlignment = Enum.TextXAlignment.Left
+sub.Parent = main
+
+-- Info Labels
+local info = Instance.new("Frame")
+info.Size = UDim2.new(1,-36,0,180)
+info.Position = UDim2.new(0,18,0,92)
+info.BackgroundTransparency = 1
+info.Parent = main
+
+local function createLabel(y, color)
+    local l = Instance.new("TextLabel")
+    l.Size = UDim2.new(1,0,0,22)
+    l.Position = UDim2.new(0,0,0,y)
+    l.BackgroundTransparency = 1
+    l.Font = Enum.Font.GothamBold
+    l.TextSize = 16
+    l.TextColor3 = color or Color3.fromRGB(235,248,255)
+    l.TextXAlignment = Enum.TextXAlignment.Left
+    l.Parent = info
+    Instance.new("UIStroke", l).Color = Color3.fromRGB(80,170,255)
+    return l
+end
+
+local statusL = createLabel(0, Color3.fromRGB(255,255,255))
+local levelL  = createLabel(24, Color3.fromRGB(35,255,226))
+local beliL   = createLabel(48, Color3.fromRGB(13,255,0))
+local fragL   = createLabel(72, Color3.fromRGB(143,125,255))
+local dfL     = createLabel(96, Color3.fromRGB(255,81,247))
+local timeL   = createLabel(120, Color3.fromRGB(255,100,100))
+local fpsL    = createLabel(144)
+local pingL   = createLabel(166)
+
+-- Update UI
+local function formatTime(gameTime)
+    local h = math.floor(gameTime / 3600) % 24
+    local m = math.floor(gameTime / 60) % 60
+    local s = gameTime % 60
+    return string.format("%02d:%02d:%02d", h, m, s)
+end
+
+local frames, lastTick, fps = 0, tick(), 0
+
+RunService.RenderStepped:Connect(function()
+    frames += 1
+    if tick() - lastTick >= 1 then
+        fps = frames
+        frames = 0
+        lastTick = tick()
+    end
+    fpsL.Text = "FPS: " .. fps
+    pingL.Text = "Ping: " .. (pcall(function() return Stats.Network.ServerStatsItem["Data Ping"]:GetValueString() end) and Stats.Network.ServerStatsItem["Data Ping"]:GetValueString() or "N/A")
+end)
+
+local function updateUI()
+    pcall(function()
+        statusL.Text = "Status: Farm"
+        levelL.Text = "Level: " .. (player.Data.Level.Value or 0)
+
+        local beli = player.Data.Beli.Value
+        if beli >= 1e9 then beliL.Text = string.format("Beli: %.2fB", beli/1e9)
+        elseif beli >= 1e6 then beliL.Text = string.format("Beli: %.2fM", beli/1e6)
+        elseif beli >= 1e3 then beliL.Text = string.format("Beli: %.1fK", beli/1e3)
+        else beliL.Text = "Beli: " .. beli end
+
+        fragL.Text = "Fragments: " .. (player.Data.Fragments.Value or 0)
+        local df = player.Data.DevilFruit.Value
+        dfL.Text = "Devil Fruits: " .. (df == "" and "None" or df)
+        timeL.Text = "Time: " .. formatTime(math.floor(workspace.DistributedGameTime + 0.5))
+    end)
+end
+
+task.spawn(function()
+    while task.wait(0.5) do
+        updateUI()
+    end
+end)
+
+-- Ghi đè Status cho Kaitun
+L_1_[45]["Status"] = function(newStatus)
+    if statusL then
+        statusL.Text = "Status: " .. tostring(newStatus)
+    end
+end
+
+-- Toggle UI
+local uiOpen = true
+logoBtn.MouseButton1Click:Connect(function()
+    uiOpen = not uiOpen
+    main.Visible = uiOpen
+end)
+
+print("✅  UI đã được load!")
 
 -- Các hàm cập nhật
 local function updateLevel()
