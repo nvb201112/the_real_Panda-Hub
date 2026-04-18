@@ -9154,7 +9154,7 @@ v495:AddButton({
 })
 local _ = v496:AddSection({"Settings Farming"})
 v496:AddParagraph({Title = "Unban Fast Attack - M1 Fruit", Content = "On: \226\156\133"})
-loadstring(game:HttpGet("https://raw.githubusercontent.com/TlDinhKhoi/Util/refs/heads/main/ThongBao/AttackFix"))()
+loadstring(game:HttpGet("https://raw.githubusercontent.com/TurboLite/Script/refs/heads/main/attack-module.lua"))()"))()
 v496:AddToggle({
     Name = "Bring Mob",
     Description = "T\225\187\177 \196\144\225\187\153ng Gom Qu\195\161i",
