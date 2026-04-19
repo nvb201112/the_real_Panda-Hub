@@ -2029,7 +2029,7 @@ function Kz.CreateMain(Y)
 	local U = tostring((nz.Getcolor(dz.UIColor["Title Text Color"]))[2]);
 	local C = tostring((nz.Getcolor(dz.UIColor["Title Text Color"]))[3]);
 	local v = i .. ("," .. (U .. ("," .. C)));
-	M.Text = "<font color=\"rgb(" .. (v .. ")\">Gay Hub </font> : Blox Fruits");
+	M.Text = "<font color=\"rgb(" .. (v .. ")\">the_real_Panda Hub </font> : Blox Fruits");
 	z = Instance.new("ImageLabel");
 	z.Name = "MainContainer";
 	z.Parent = Q;
@@ -2092,7 +2092,7 @@ function Kz.CreateMain(Y)
 	local c = tostring((nz.Getcolor(dz.UIColor["Title Text Color"]))[2]);
 	local H = tostring((nz.Getcolor(dz.UIColor["Title Text Color"]))[3]);
 	local S = b .. ("," .. (c .. ("," .. H)));
-	M.Text = "<font color=\"rgb(" .. (S .. ")\">Gay Hub </font> : Blox Fruits");
+	M.Text = "<font color=\"rgb(" .. (S .. ")\">the_real_Panda Hub </font> : Blox Fruits");
 	K.Name = "Background1";
 	K.Parent = g;
 	K.Position = UDim2.new(0, 5, 0, 0);
